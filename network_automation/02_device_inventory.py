@@ -24,7 +24,7 @@ devices = [
 ]
 
 # Basic inventory queries
-assert len(devices) == __, "Fix this: how many devices in inventory?"
+assert len(devices) == 5 , "Fix this: how many devices in inventory?"
 
 # Find device by hostname
 def find_device_by_hostname(inventory, hostname):
@@ -34,18 +34,18 @@ def find_device_by_hostname(inventory, hostname):
     return None
 
 core_switch = find_device_by_hostname(devices, "CORE-SW-01")
-assert core_switch["ip"] == __, "Fix this: what is the core switch IP?"
-assert core_switch["location"] == __, "Fix this: where is the core switch?"
+assert core_switch["ip"] == "10.0.0.1", "Fix this: what is the core switch IP?"
+assert core_switch["location"] == "Server Room", "Fix this: where is the core switch?"
 
 # Get all devices of a specific type
 def get_devices_by_type(inventory, device_type):
     return [d for d in inventory if d["type"] == device_type]
 
 switches = get_devices_by_type(devices, "Switch")
-assert len(switches) == __, "Fix this: how many switches?"
+assert len(switches) == 3 , "Fix this: how many switches?"
 
 routers = get_devices_by_type(devices, "Router")
-assert len(routers) == __, "Fix this: how many routers?"
+assert len(routers) == 1 , "Fix this: how many routers?"
 
 # Get devices in a location
 def get_devices_by_location(inventory, location):
@@ -56,7 +56,7 @@ def get_devices_by_location(inventory, location):
     return result
 
 server_room_devices = get_devices_by_location(devices, "Server Room")
-assert len(server_room_devices) == __, "Fix this: how many devices in Server Room?"
+assert len(server_room_devices) == 2 , "Fix this: how many devices in Server Room?"
 
 # Count devices by type
 def count_devices_by_type(inventory):
@@ -70,11 +70,11 @@ def count_devices_by_type(inventory):
     return counts
 
 device_counts = count_devices_by_type(devices)
-assert device_counts["Switch"] == __, "Fix this: how many switches?"
-assert device_counts["Router"] == __, "Fix this: how many routers?"
-assert device_counts["Firewall"] == __, "Fix this: how many firewalls?"
+assert device_counts["Switch"] == 3 , "Fix this: how many switches?"
+assert device_counts["Router"] == 1 , "Fix this: how many routers?"
+assert device_counts["Firewall"] == 1 , "Fix this: how many firewalls?"
 
-# Generate device configuration template
+# Generate device configuration templa_te
 def generate_device_config(device):
     config = f"""
 hostname {device['hostname']}
@@ -102,10 +102,10 @@ def add_device(inventory, hostname, ip, device_type, vlan, location):
 
 # Add a new access switch
 devices = add_device(devices, "ACC-SW-01", "10.0.2.1", "Switch", 30, "Floor 3")
-assert len(devices) == __, "Fix this: how many devices after adding one?"
+assert len(devices) == 6 , "Fix this: how many devices after adding one?"
 
 new_device = find_device_by_hostname(devices, "ACC-SW-01")
-assert new_device["location"] == __, "Fix this: what is the new device location?"
+assert new_device["location"] == "Floor 3", "Fix this: what is the new device location?"
 
 # Update device information
 def update_device_ip(inventory, hostname, new_ip):
@@ -116,10 +116,10 @@ def update_device_ip(inventory, hostname, new_ip):
     return False
 
 success = update_device_ip(devices, "ACC-SW-01", "10.0.2.10")
-assert success == __, "Fix this: was the update successful?"
+assert success == True, "Fix this: was the update successful?"
 
 updated_device = find_device_by_hostname(devices, "ACC-SW-01")
-assert updated_device["ip"] == __, "Fix this: what is the updated IP?"
+assert updated_device["ip"] == "10.0.2.10", "Fix this: what is the updated IP?"
 
 # Generate inventory report
 def generate_inventory_report(inventory):
@@ -133,7 +133,7 @@ def generate_inventory_report(inventory):
 
 report = generate_inventory_report(devices[:2])  # First 2 devices only
 lines = report.split("\n")
-assert len(lines) == __, "Fix this: how many lines in report? (header + separator + 2 devices)"
+assert len(lines) == 4 , "Fix this: how many lines in report? (header + separator + 2 devices)"
 assert "CORE-SW-01" in report, "Fix this: report should contain CORE-SW-01"
 
 # Export to CSV format
@@ -146,8 +146,8 @@ def export_to_csv(inventory):
 
 csv_output = export_to_csv(devices[:2])
 csv_rows = csv_output.split("\n")
-assert len(csv_rows) == __, "Fix this: how many CSV rows? (header + 2 devices)"
-assert csv_rows[0] == __, "Fix this: what is the CSV header?"
+assert len(csv_rows) == 3 , "Fix this: how many CSV rows? (header + 2 devices)"
+assert csv_rows[0] == "hostname,ip,type,vlan,location", "Fix this: what is the CSV header?"
 
 # Parse CSV back to device list
 def parse_csv_to_devices(csv_string):
@@ -170,8 +170,8 @@ def parse_csv_to_devices(csv_string):
 
 csv_data = "hostname,ip,type,vlan,location\nTEST-SW-01,10.1.1.1,Switch,100,Test Lab"
 parsed = parse_csv_to_devices(csv_data)
-assert len(parsed) == __, "Fix this: how many devices parsed?"
-assert parsed[0]["hostname"] == __, "Fix this: what is the hostname?"
-assert parsed[0]["vlan"] == __, "Fix this: what is the VLAN (as number)?"
+assert len(parsed) == 1 , "Fix this: how many devices parsed?"
+assert parsed[0]["hostname"] == "TEST-SW-01", "Fix this: what is the hostname?"
+assert parsed[0]["vlan"] == 100 , "Fix this: what is the VLAN (as number)?"
 
 print("✓ Network Koan 2 completed! You can manage device inventories.")

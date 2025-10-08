@@ -16,18 +16,18 @@ This koan relates to course goals:
 # IP address components
 ip_address = "192.168.1.100"
 octets = ip_address.split(".")
-assert len(octets) == __, "Fix this: how many octets in an IPv4 address?"
-assert octets[0] == __, "Fix this: what is the first octet?"
-assert octets[3] == __, "Fix this: what is the last octet?"
+assert len(octets) == 4, "Fix this: how many octets in an IPv4 address?"
+assert octets[0] == "192", "Fix this: what is the first octet?"
+assert octets[3] == "100", "Fix this: what is the last octet?"
 
 # Validate IP address - all octets should be 0-255
 def is_valid_octet(octet):
     num = int(octet)
     return 0 <= num <= 255
 
-assert is_valid_octet("192") == __, "Fix this: is 192 a valid octet?"
-assert is_valid_octet("300") == __, "Fix this: is 300 a valid octet?"
-assert is_valid_octet("0") == __, "Fix this: is 0 a valid octet?"
+assert is_valid_octet("192") == True, "Fix this: is 192 a valid octet?"
+assert is_valid_octet("300") == False, "Fix this: is 300 a valid octet?"
+assert is_valid_octet("0") == True, "Fix this: is 0 a valid octet?"
 
 # Complete IP validation function
 def is_valid_ip(ip_string):
@@ -39,16 +39,16 @@ def is_valid_ip(ip_string):
             return False
     return True
 
-assert is_valid_ip("192.168.1.1") == __, "Fix this: is this a valid IP?"
-assert is_valid_ip("256.1.1.1") == __, "Fix this: is this a valid IP?"
-assert is_valid_ip("10.0.0") == __, "Fix this: is this a valid IP?"
+assert is_valid_ip("192.168.1.1") == True, "Fix this: is this a valid IP?"
+assert is_valid_ip("256.1.1.1") == False, "Fix this: is this a valid IP?"
+assert is_valid_ip("10.0.0") == False, "Fix this: is this a valid IP?"
 
 # CIDR notation
 cidr = "192.168.1.0/24"
 ip_part, prefix = cidr.split("/")
-assert ip_part == __, "Fix this: what is the IP part?"
-assert prefix == __, "Fix this: what is the prefix length?"
-assert int(prefix) == __, "Fix this: what is the prefix as a number?"
+assert ip_part == "192.168.1.0", "Fix this: what is the IP part?"
+assert prefix == "24", "Fix this: what is the prefix length?"
+assert int(prefix) == 24, "Fix this: what is the prefix as a number?"
 
 # Subnet mask calculation (simplified)
 def prefix_to_subnet_mask(prefix_length):
@@ -60,8 +60,8 @@ def prefix_to_subnet_mask(prefix_length):
         return "255.0.0.0"
     return "Unknown"
 
-assert prefix_to_subnet_mask(24) == __, "Fix this: what is /24 subnet mask?"
-assert prefix_to_subnet_mask(16) == __, "Fix this: what is /16 subnet mask?"
+assert prefix_to_subnet_mask(24) == "255.255.255.0", "Fix this: what is /24 subnet mask?"
+assert prefix_to_subnet_mask(16) == "255.255.0.0", "Fix this: what is /16 subnet mask?"
 
 # Private IP ranges
 def is_private_ip(ip):
@@ -79,10 +79,10 @@ def is_private_ip(ip):
         return True
     return False
 
-assert is_private_ip("192.168.1.1") == __, "Fix this: is this a private IP?"
-assert is_private_ip("8.8.8.8") == __, "Fix this: is this a private IP?"
-assert is_private_ip("10.0.0.1") == __, "Fix this: is this a private IP?"
-assert is_private_ip("172.16.0.1") == __, "Fix this: is this a private IP?"
+assert is_private_ip("192.168.1.1") == True, "Fix this: is this a private IP?"
+assert is_private_ip("8.8.8.8") == False, "Fix this: is this a private IP?"
+assert is_private_ip("10.0.0.1") == True, "Fix this: is this a private IP?"
+assert is_private_ip("172.16.0.1") == True, "Fix this: is this a private IP?"
 
 # Generate IP range
 def generate_ip_range(base_ip, count):
@@ -97,9 +97,9 @@ def generate_ip_range(base_ip, count):
     return ips
 
 ip_range = generate_ip_range("192.168.1.10", 5)
-assert len(ip_range) == __, "Fix this: how many IPs generated?"
-assert ip_range[0] == __, "Fix this: what is the first IP?"
-assert ip_range[4] == __, "Fix this: what is the last IP?"
+assert len(ip_range) == 5 , "Fix this: how many IPs generated?"
+assert ip_range[0] == "192.168.1.10" , "Fix this: what is the first IP?"
+assert ip_range[4] == "192.168.1.14", "Fix this: what is the last IP?"
 
 # MAC address validation
 def is_valid_mac(mac):
@@ -112,7 +112,8 @@ def is_valid_mac(mac):
             return False
     return True
 
-assert is_valid_mac("00:1A:2B:3C:4D:5E") == __, "Fix this: is this a valid MAC?"
-assert is_valid_mac("00:1A:2B:3C:4D") == __, "Fix this: is this a valid MAC?"
+assert is_valid_mac("00:1A:2B:3C:4D:5E") == True, "Fix this: is this a valid MAC?"
+assert is_valid_mac("00:1A:2B:3C:4D") == False, "Fix this: is this a valid MAC?"
 
 print("✓ Network Koan 1 completed! You can validate and manipulate IP addresses.")
+

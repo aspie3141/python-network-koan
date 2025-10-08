@@ -16,8 +16,6 @@ Du bör se något som: `Python 3.11.x` eller liknande.
 
 **Windows-användare:** Använd `python` istället för `python3`
 
----
-
 ## Steg 2: Navigera till koan-mappen
 
 ```bash
@@ -55,7 +53,8 @@ Fix the failing koan above, then run again!
 
 ## Steg 4: Fixa ditt första fel
 
-1. **Öppna filen:** `basic_python/01_variables_and_strings.py`
+1. **Öppna filen:** `basic_python/01_variables_and_strin
+gs.py`
 
 2. **Hitta raden med `__`** (understreck):
    ```python

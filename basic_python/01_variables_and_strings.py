@@ -31,9 +31,7 @@ assert len(ip_address) == 11, "Fix this: how many characters are in '192.168.1.1
 hostname = "SWITCH01"
 port = 22
 connection_string = f"{hostname}:{port}"
-assert (
-    connection_string == "SWITCH01:22"
-), "Fix this: what is the value of connection_string?"
+assert connection_string == "SWITCH01:22", "Fix this: what is the value of connection_string?"
 
 # String methods - upper and lower
 device_name = "Router"
