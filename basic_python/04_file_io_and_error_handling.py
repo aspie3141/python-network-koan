@@ -35,7 +35,7 @@ Notes: Unusual activity detected before offline
 
 # Simulate reading from a file using a string
 lines = incident_report.split("\n")
-assert len(lines) == __, "Fix this: how many lines in the report?"
+assert len(lines) == 9, "Fix this: how many lines in the report?"
 
 # Find the critical information
 time_line = lines[2]  # "Time: 03:47 AM"
@@ -43,7 +43,7 @@ assert "03:47" in time_line, "Fix this: should contain the time"
 
 # Extract just the time value
 time_value = time_line.split(": ")[1]
-assert time_value == __, "Fix this: what is the extracted time?"
+assert time_value == "03:47 AM", "Fix this: what is the extracted time?"
 
 # 🔍 CLUE #2: Reading device logs
 # You find a log file from one of the switches
@@ -54,7 +54,7 @@ device_log = """2025-10-07 03:40:15 - Switch-01 - Normal operation
 2025-10-07 03:47:05 - Switch-01 - Connection lost"""
 
 log_entries = device_log.strip().split("\n")
-assert len(log_entries) == __, "Fix this: how many log entries?"
+assert len(log_entries) == 4, "Fix this: how many log entries?"
 
 # Find the suspicious entry
 suspicious_line = log_entries[2]
@@ -77,7 +77,7 @@ assert "03:40:15" in result, "Fix this: first line should contain this timestamp
 
 # Test with invalid line (line 100 doesn't exist)
 error_result = read_log_safely(device_log, 100)
-assert error_result == __, "Fix this: what error message is returned?"
+assert error_result == "ERROR: Line not found", "Fix this: what error message is returned?"
 
 # 🔍 CLUE #4: Parse suspicious commands
 # You need to extract all timestamps where something unusual happened
@@ -96,9 +96,9 @@ def extract_suspicious_timestamps(log):
     return suspicious_times
 
 suspicious = extract_suspicious_timestamps(device_log)
-assert len(suspicious) == __, "Fix this: how many suspicious entries?"
-assert suspicious[0] == __, "Fix this: what is the first suspicious timestamp?"
-assert suspicious[1] == __, "Fix this: what is the second suspicious timestamp?"
+assert len(suspicious) == 2, "Fix this: how many suspicious entries?"
+assert suspicious[0] == "2025-10-07 03:42:30", "Fix this: what is the first suspicious timestamp?"
+assert suspicious[1] == "2025-10-07 03:45:12", "Fix this: what is the second suspicious timestamp?"
 
 # 🔍 CLUE #5: Writing your investigation notes
 # Create an investigation report
@@ -137,7 +137,7 @@ def safe_file_operation(filename, operation="read"):
 
 # Test reading existing file
 result = safe_file_operation("device_log.txt", "read")
-assert result == __, "Fix this: what is returned for successful read?"
+assert result == "File content here", "Fix this: what is returned for successful read?"
 
 # Test reading missing file
 result = safe_file_operation("missing.txt", "read")
@@ -163,7 +163,7 @@ def count_configuration_changes(logs_dict):
     return count
 
 change_count = count_configuration_changes(logs_data)
-assert change_count == __, "Fix this: how many devices had config changes?"
+assert change_count == 3, "Fix this: how many devices had config changes?"
 
 # 🔍 CLUE #8: Extract evidence - get device names with issues
 def get_affected_devices(logs_dict):
@@ -177,7 +177,7 @@ def get_affected_devices(logs_dict):
     return affected
 
 affected_devices = get_affected_devices(logs_data)
-assert len(affected_devices) == __, "Fix this: how many affected devices?"
+assert len(affected_devices) == 3, "Fix this: how many affected devices?"
 assert "Switch-01" in affected_devices, "Fix this: Switch-01 should be in the list"
 assert "Switch-03" not in affected_devices, "Fix this: Switch-03 should NOT be in the list"
 
@@ -199,9 +199,9 @@ def create_timeline(logs_dict):
     return timeline
 
 timeline = create_timeline(logs_data)
-assert len(timeline) == __, "Fix this: how many events in timeline?"
-assert timeline[0]["device"] == __, "Fix this: which device had the first event?"
-assert timeline[-1]["device"] == __, "Fix this: which device had the last event?"
+assert len(timeline) == 4, "Fix this: how many events in timeline?"
+assert timeline[0]["device"] == "Switch-01", "Fix this: which device had the first event?"
+assert timeline[-1]["device"] == "Switch-03", "Fix this: which device had the last event?"
 
 # 🔍 MYSTERY UPDATE: Pattern discovered!
 # All configuration changes happened within 3 minutes

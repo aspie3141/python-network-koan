@@ -39,16 +39,16 @@ def parse_log_entry(log_line):
     }
 
 first_log = parse_log_entry(network_logs[0])
-assert first_log["device"] == __, "Fix this: what device generated the first log?"
-assert first_log["level"] == __, "Fix this: what is the log level?"
-assert first_log["message"] == __, "Fix this: what is the log message?"
+assert first_log["device"] == "CORE-SW-01", "Fix this: what device generated the first log?"
+assert first_log["level"] == "INFO", "Fix this: what is the log level?"
+assert first_log["message"] == "Port Gi0/1 is UP", "Fix this: what is the log message?"
 
 # Parse all logs
 def parse_all_logs(log_list):
     return [parse_log_entry(log) for log in log_list]
 
 parsed_logs = parse_all_logs(network_logs)
-assert len(parsed_logs) == __, "Fix this: how many logs were parsed?"
+assert len(parsed_logs) == 7, "Fix this: how many logs were parsed?"
 
 # Filter logs by severity level
 def filter_by_level(logs, level):
@@ -59,17 +59,17 @@ def filter_by_level(logs, level):
     return result
 
 errors = filter_by_level(parsed_logs, "ERROR")
-assert len(errors) == __, "Fix this: how many ERROR logs?"
+assert len(errors) == 3, "Fix this: how many ERROR logs?"
 
 warnings = filter_by_level(parsed_logs, "WARNING")
-assert len(warnings) == __, "Fix this: how many WARNING logs?"
+assert len(warnings) == 2, "Fix this: how many WARNING logs?"
 
 # Find logs for a specific device
 def get_device_logs(logs, device_name):
     return [log for log in logs if log["device"] == device_name]
 
 core_switch_logs = get_device_logs(parsed_logs, "CORE-SW-01")
-assert len(core_switch_logs) == __, "Fix this: how many logs from CORE-SW-01?"
+assert len(core_switch_logs) == 3, "Fix this: how many logs from CORE-SW-01?"
 
 # Count logs by device
 def count_logs_by_device(logs):
@@ -80,7 +80,7 @@ def count_logs_by_device(logs):
     return counts
 
 device_log_counts = count_logs_by_device(parsed_logs)
-assert device_log_counts["DIST-SW-01"] == __, "Fix this: how many logs from DIST-SW-01?"
+assert device_log_counts["DIST-SW-01"] == 2, "Fix this: how many logs from DIST-SW-01?"
 
 # Detect critical issues
 def detect_critical_issues(logs):
@@ -95,7 +95,7 @@ def detect_critical_issues(logs):
     return critical
 
 critical_issues = detect_critical_issues(parsed_logs)
-assert len(critical_issues) == __, "Fix this: how many critical issues?"
+assert len(critical_issues) == 3, "Fix this: how many critical issues?"
 
 # Network performance metrics
 performance_data = [
@@ -116,15 +116,15 @@ def calculate_average_cpu(metrics, device_name):
     return total_cpu / len(device_metrics)
 
 avg_cpu_core = calculate_average_cpu(performance_data, "CORE-SW-01")
-assert avg_cpu_core == __, "Fix this: what is average CPU for CORE-SW-01? (57.33...)"
+assert avg_cpu_core == 57.333333333333336, "Fix this: what is average CPU for CORE-SW-01? (57.33...)"
 
 # Find performance anomalies (CPU > 80%)
 def find_high_cpu_events(metrics, threshold=80):
     return [m for m in metrics if m["cpu"] > threshold]
 
 high_cpu = find_high_cpu_events(performance_data)
-assert len(high_cpu) == __, "Fix this: how many high CPU events?"
-assert high_cpu[0]["device"] == __, "Fix this: which device had high CPU?"
+assert len(high_cpu) == 1, "Fix this: how many high CPU events?"
+assert high_cpu[0]["device"] == "CORE-SW-01", "Fix this: which device had high CPU?"
 
 # Generate performance alert
 def generate_alert(metric):
@@ -143,7 +143,7 @@ def generate_alert(metric):
     }
 
 alert = generate_alert(performance_data[1])  # High CPU entry
-assert alert["severity"] == __, "Fix this: what is the alert severity?"
+assert alert["severity"] == "CRITICAL", "Fix this: what is the alert severity?"
 assert "85%" in alert["message"], "Fix this: alert message should contain CPU percentage"
 
 # Bandwidth analysis
@@ -151,7 +151,7 @@ def calculate_total_bandwidth(metrics):
     return sum(m["bandwidth"] for m in metrics)
 
 total_bw = calculate_total_bandwidth(performance_data)
-assert total_bw == __, "Fix this: what is total bandwidth? (1740)"
+assert total_bw == 1740, "Fix this: what is total bandwidth? (1740)"
 
 # Find peak bandwidth usage
 def find_peak_bandwidth(metrics):
@@ -165,8 +165,8 @@ def find_peak_bandwidth(metrics):
     return peak
 
 peak = find_peak_bandwidth(performance_data)
-assert peak["bandwidth"] == __, "Fix this: what is peak bandwidth?"
-assert peak["device"] == __, "Fix this: which device had peak bandwidth?"
+assert peak["bandwidth"] == 780, "Fix this: what is peak bandwidth?"
+assert peak["device"] == "CORE-SW-01", "Fix this: which device had peak bandwidth?"
 
 # Generate monitoring report
 def generate_monitoring_report(logs, metrics):
@@ -187,9 +187,9 @@ def generate_monitoring_report(logs, metrics):
     return report
 
 report = generate_monitoring_report(parsed_logs, performance_data)
-assert report["errors"] == __, "Fix this: how many errors in report?"
-assert report["critical_issues"] == __, "Fix this: how many critical issues?"
-assert report["devices_monitored"] == __, "Fix this: how many devices monitored?"
+assert report["errors"] == 3, "Fix this: how many errors in report?"
+assert report["critical_issues"] == 3, "Fix this: how many critical issues?"
+assert report["devices_monitored"] == 2, "Fix this: how many devices monitored?"
 
 # Uptime calculation (in minutes)
 def calculate_uptime(start_time, end_time):
@@ -203,7 +203,7 @@ def calculate_uptime(start_time, end_time):
     return end_total - start_total
 
 uptime = calculate_uptime("09:00", "09:30")
-assert uptime == __, "Fix this: how many minutes of uptime?"
+assert uptime == 30, "Fix this: how many minutes of uptime?"
 
 # Network health score (0-100)
 def calculate_health_score(metrics):
@@ -242,7 +242,7 @@ def summarize_logs_by_hour(logs):
     return summary
 
 summary = summarize_logs_by_hour(parsed_logs)
-assert len(summary) == __, "Fix this: how many hours in summary?"
+assert len(summary) == 1, "Fix this: how many hours in summary?"
 # All logs are from 09:xx so should be 1 hour
 assert "2025-10-07 09:00" in summary, "Fix this: summary should have the hour key"
 

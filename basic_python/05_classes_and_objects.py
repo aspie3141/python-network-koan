@@ -44,10 +44,10 @@ class Evidence:
 # Create your first piece of evidence
 evidence1 = Evidence("LOG", "Unknown command executed", "03:45:12")
 
-assert evidence1.evidence_type == __, "Fix this: what is the evidence type?"
-assert evidence1.description == __, "Fix this: what is the description?"
-assert evidence1.timestamp == __, "Fix this: what is the timestamp?"
-assert evidence1.severity == __, "Fix this: what is the default severity?"
+assert evidence1.evidence_type == "LOG", "Fix this: what is the evidence type?"
+assert evidence1.description == "Unknown command executed", "Fix this: what is the description?"
+assert evidence1.timestamp == "03:45:12", "Fix this: what is the timestamp?"
+assert evidence1.severity == "UNKNOWN", "Fix this: what is the default severity?"
 
 # Test the method
 summary = evidence1.get_summary()
@@ -61,11 +61,11 @@ evidence3 = Evidence("ACCESS", "Login from unknown IP", "03:40:00")
 
 # Create a list of evidence
 all_evidence = [evidence1, evidence2, evidence3]
-assert len(all_evidence) == __, "Fix this: how many pieces of evidence?"
+assert len(all_evidence) == 3, "Fix this: how many pieces of evidence?"
 
 # Access the second piece of evidence
-assert all_evidence[1].evidence_type == __, "Fix this: what type is the second evidence?"
-assert all_evidence[2].timestamp == __, "Fix this: what is the third evidence timestamp?"
+assert all_evidence[1].evidence_type == "CONFIG", "Fix this: what type is the second evidence?"
+assert all_evidence[2].timestamp == "03:40:00", "Fix this: what is the third evidence timestamp?"
 
 # 🔍 EVIDENCE #3: Adding methods to modify objects
 
@@ -94,8 +94,8 @@ class Evidence:
 evidence = Evidence("ACCESS", "Backdoor account created", "03:41:00")
 evidence.set_severity("CRITICAL")
 
-assert evidence.severity == __, "Fix this: what is the severity after setting it?"
-assert evidence.is_critical() == __, "Fix this: is this evidence critical?"
+assert evidence.severity == "CRITICAL", "Fix this: what is the severity after setting it?"
+assert evidence.is_critical() == True, "Fix this: is this evidence critical?"
 
 # 🔍 SUSPECT TRACKING: Create a Suspect class
 
@@ -132,21 +132,21 @@ class Suspect:
 # 🔍 CLUE: Tracking our first suspect
 suspect1 = Suspect("Unknown User", "192.168.1.50", "03:45:00")
 
-assert suspect1.name == __, "Fix this: what is the suspect's name?"
-assert suspect1.suspicion_level == __, "Fix this: what is the initial suspicion level?"
-assert suspect1.get_threat_level() == __, "Fix this: what is the initial threat level?"
+assert suspect1.name == "Unknown User", "Fix this: what is the suspect's name?"
+assert suspect1.suspicion_level == 0, "Fix this: what is the initial suspicion level?"
+assert suspect1.get_threat_level() == "LOW", "Fix this: what is the initial threat level?"
 
 # Add evidence against the suspect
 suspect1.add_evidence()
-assert suspect1.evidence_count == __, "Fix this: how many pieces of evidence after adding one?"
-assert suspect1.suspicion_level == __, "Fix this: what is suspicion level after one evidence?"
+assert suspect1.evidence_count == 1, "Fix this: how many pieces of evidence after adding one?"
+assert suspect1.suspicion_level == 20, "Fix this: what is suspicion level after one evidence?"
 
 # Add more evidence
 suspect1.add_evidence()
 suspect1.add_evidence()
-assert suspect1.evidence_count == __, "Fix this: total evidence count?"
-assert suspect1.suspicion_level == __, "Fix this: suspicion level after 3 pieces of evidence?"
-assert suspect1.get_threat_level() == __, "Fix this: what threat level now? (60 suspicion)"
+assert suspect1.evidence_count == 3, "Fix this: total evidence count?"
+assert suspect1.suspicion_level == 60, "Fix this: suspicion level after 3 pieces of evidence?"
+assert suspect1.get_threat_level() == "HIGH", "Fix this: what threat level now? (60 suspicion)"
 
 # 🔍 CASE FILE: Create a comprehensive Case class
 
@@ -199,9 +199,9 @@ class Case:
 # Create the case
 network_breach = Case("CASE-2025-001", "Unauthorized Network Access")
 
-assert network_breach.case_id == __, "Fix this: what is the case ID?"
-assert network_breach.title == __, "Fix this: what is the case title?"
-assert network_breach.status == __, "Fix this: what is the initial status?"
+assert network_breach.case_id == "CASE-2025-001", "Fix this: what is the case ID?"
+assert network_breach.title == "Unauthorized Network Access", "Fix this: what is the case title?"
+assert network_breach.status == "OPEN", "Fix this: what is the initial status?"
 
 # Add evidence to the case
 ev1 = Evidence("LOG", "Unknown command executed", "03:45:12")
@@ -217,12 +217,12 @@ network_breach.add_evidence(ev1)
 network_breach.add_evidence(ev2)
 network_breach.add_evidence(ev3)
 
-assert network_breach.get_evidence_count() == __, "Fix this: how many pieces of evidence?"
+assert network_breach.get_evidence_count() == 3, "Fix this: how many pieces of evidence?"
 
 # Get critical evidence
 critical = network_breach.get_critical_evidence()
-assert len(critical) == __, "Fix this: how many critical pieces of evidence?"
-assert critical[0].evidence_type == __, "Fix this: what type is the critical evidence?"
+assert len(critical) == 1, "Fix this: how many critical pieces of evidence?"
+assert critical[0].evidence_type == "LOG", "Fix this: what type is the critical evidence?"
 
 # Add suspects
 suspect_alpha = Suspect("Unknown-Alpha", "192.168.1.50", "03:45:00")
@@ -236,12 +236,12 @@ suspect_beta.add_evidence()
 network_breach.add_suspect(suspect_alpha)
 network_breach.add_suspect(suspect_beta)
 
-assert len(network_breach.suspects) == __, "Fix this: how many suspects?"
+assert len(network_breach.suspects) == 2, "Fix this: how many suspects?"
 
 # Find the primary suspect
 primary = network_breach.get_primary_suspect()
-assert primary.name == __, "Fix this: who is the primary suspect? (higher suspicion)"
-assert primary.suspicion_level == __, "Fix this: what is the primary suspect's suspicion level?"
+assert primary.name == "Unknown-Alpha", "Fix this: who is the primary suspect? (higher suspicion)"
+assert primary.suspicion_level == 60, "Fix this: what is the primary suspect's suspicion level?"
 
 # 🔍 ADVANCED: Class with class methods
 
@@ -312,12 +312,12 @@ devices = [
 devices[0].mark_compromised("03:42:30")
 devices[1].mark_compromised("03:43:15")
 
-assert devices[0].is_compromised() == __, "Fix this: is Switch-01 compromised?"
-assert devices[2].is_compromised() == __, "Fix this: is Router-01 compromised?"
+assert devices[0].is_compromised() == True, "Fix this: is Switch-01 compromised?"
+assert devices[2].is_compromised() == False, "Fix this: is Router-01 compromised?"
 
 # Count compromised devices
 compromised_count = sum(1 for d in devices if d.is_compromised())
-assert compromised_count == __, "Fix this: how many devices are compromised?"
+assert compromised_count == 2, "Fix this: how many devices are compromised?"
 
 print("✓ Koan 5 completed!")
 print("""
